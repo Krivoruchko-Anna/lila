@@ -15,6 +15,10 @@ defineProps({
   descriptionId: {
     type: Number,
     required: false
+  },
+  highlightedCell: {
+    type: Number,
+    required: false
   }
 })
 
@@ -22,7 +26,11 @@ defineProps({
 
 <template>
   <div class="cell"
-       :class="{ 'active': isActive }"
+       :class="{
+      'active': isActive,
+      'active-teleport': highlightedCell === cell,
+      'final-cell': activeId === 68 && activeId === cell
+  }"
        :data-id="activeId"
   >
     <img
@@ -73,6 +81,17 @@ defineProps({
     filter: none;
     border: 2px transparent solid;
   }
+}
+
+.active-teleport {
+  border: 6px #d4e4ff solid;
+  border-radius: 0;
+  filter: blur(4px);
+  transition: 0.3s all;
+}
+
+.final-cell {
+  background-color: rgba(251 229 252/ 0.64);
 }
 
 @keyframes appear {

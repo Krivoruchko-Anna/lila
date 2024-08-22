@@ -1,4 +1,6 @@
 <script setup>
+import { Cards } from "@/data/cards.js";
+
 defineProps({
   cellId: {
     type: Number,
@@ -10,7 +12,8 @@ defineProps({
 <template>
   <div class="cell-description">
     <div class="cell-description__wrapper">
-      <div>Description {{ cellId }}</div>
+      <div class="cell-description__title">{{ Cards[cellId].title }}</div>
+      <div class="cell-description__text">{{ Cards[cellId].text }}</div>
     </div>
   </div>
 </template>
@@ -22,15 +25,30 @@ defineProps({
   right: 0;
   left: 0;
   bottom: 0;
-  background-color: rgb(23 23 23 / 80%);
+  background-color: rgb(23 23 23 / 90%);
   z-index: 100;
+  overflow: auto;
+  padding-top: 140px;
 
   &__wrapper {
     height: 100%;
+    max-width: 820px;
+    margin: 0 auto;
     display: flex;
-    justify-content: center;
     align-items: center;
+    flex-direction: column;
     color: white;
+  }
+
+  &__title {
+    font-size: 24px;
+    display: block;
+  }
+
+  &__text {
+    margin-top: 20px;
+    padding-bottom: 120px;
+    font-size: 16px;
   }
 }
 </style>

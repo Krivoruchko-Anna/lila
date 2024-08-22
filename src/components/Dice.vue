@@ -4,20 +4,40 @@ defineProps({
     type: Number,
     required: false
   },
+  isNewGame: {
+    type: Boolean,
+    required: false
+  }
 })
+
+const emits = defineEmits(['throw'])
 </script>
 
 <template>
   <div class="dice">
-    <img class="dice__number" v-if="number" :src="`src/assets/dice/dice-${number}.svg`" :alt="number">
-    <img class="dice__loader" v-else src="@/assets/dice/dice-loader.svg" alt="loader">
+    <div
+        class="dice__text"
+        :class="{ 'visible': isNewGame }">
+      Throw 6 to start the game
+    </div>
+    <img
+        class="dice__number"
+        v-if="number"
+        :src="`src/assets/dice/dice-${number}.svg`"
+        :alt="number"
+        @click="emits('throw')"
+    >
+    <img
+        v-else
+        class="dice__loader"
+        src="@/assets/dice/dice-loader.svg"
+        alt="loader">
   </div>
 </template>
 
 <style scoped lang="scss">
 .dice {
   text-align: center;
-  cursor: pointer;
   width: fit-content;
   margin: 0 auto;
 
@@ -25,19 +45,38 @@ defineProps({
     width: 52px;
     height: 52px;
     background-color: #241923;
+    border-radius: 6px;
   }
 
   &__number {
     animation: appear 0.5s ease-in-out;
+    cursor: pointer;
   }
 
   &__loader {
     animation: loader 1.4s ease-in-out;
+    pointer-events: none;
+  }
+
+  &__text {
+    color: white;
+    margin-bottom: 6px;
+    transition: 0.3s all;
+    opacity: 0;
+    pointer-events: none;
   }
 
   &:hover {
     animation: scale 0.5s ease-in-out;
+
+    .dice__text {
+      opacity: 0;
+    }
   }
+}
+
+.visible {
+  opacity: 1;
 }
 
 @keyframes appear {

@@ -10,6 +10,10 @@ defineProps({
   descriptionId: {
     type: Number,
     required: false
+  },
+  highlightedCell: {
+    type: Number,
+    required: false
   }
 })
 
@@ -36,13 +40,16 @@ const closeDescription = () => {
         :active-id="activeCell"
         :description-id="descriptionId"
         :is-active="+activeCell === +cell"
+        :highlighted-cell="highlightedCell"
         @click="showDescription(cell)"
     ></Cell>
   </div>
 
   <Teleport to="body">
     <CellDescription
-        v-if="descriptionId" :cell-id="descriptionId" @click="closeDescription"/>
+        v-if="descriptionId"
+        :cell-id="descriptionId"
+        @click="closeDescription"/>
   </Teleport>
 </template>
 

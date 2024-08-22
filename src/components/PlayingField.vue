@@ -1,55 +1,99 @@
 <script setup>
 import { ref, watch } from "vue";
+import { Cards } from "@/data/cards.js";
+import { TeleportCells } from "@/data/teleportCells.js";
+import { useHistoryStore } from "@/stores/history.js";
 import Cells from "@/components/Cells.vue";
 
 const props = defineProps({
   diceNumber: {
     type: Number,
     required: false
+  },
+  isNewGame: {
+    type: Boolean,
+    required: false
   }
 })
 
-const activeCell = ref(6);
+const store = useHistoryStore()
+
+const activeCell = ref(68);
+const highlightedCell = ref();
 
 const descriptionId = ref(null)
 
-const teleportCells = {
-  10: 24, 12: 8, 16: 4, 17: 69, 20: 32,
-  22: 60, 24: 7, 27: 41, 28: 50, 29: 6,
-  37: 64, 44: 9, 45: 67, 46: 62, 52: 35,
-  54: 68, 55: 3, 61: 13, 63: 2, 72: 51
-};
-
 const handlePlayerTeleport = async () => {
-  await delay(500)
-  activeCell.value = teleportCells[activeCell.value]
+  await delay(600)
+  activeCell.value = TeleportCells[activeCell.value]
+  highlightedCell.value = undefined
 
+  await delay(900)
   openDescription(activeCell.value)
 }
 
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms))
 
 const movePlayer = async () => {
+  if (props.isNewGame && props.diceNumber + activeCell.value > 72) return
+
   for (let i = 0; i < props.diceNumber; i++) {
     activeCell.value += 1
     await delay(500)
   }
 
-  if (teleportCells[activeCell.value]) {
+  if (TeleportCells[activeCell.value]) {
+    highlightedCell.value = TeleportCells[activeCell.value];
     await handlePlayerTeleport()
+  } else {
+    await delay(500)
+    openDescription(activeCell.value)
   }
+
+  saveToHistory()
 };
+
+const startGame = async () => {
+  highlightedCell.value = 1
+
+  await delay(1000)
+
+  highlightedCell.value = undefined
+  activeCell.value = 1
+  openDescription(activeCell.value)
+  saveToHistory()
+}
+
+const saveToHistory = () => {
+  store.updateHistory(Cards[activeCell.value].title)
+}
 
 const openDescription = (cell) => {
   descriptionId.value = cell
 }
 
-const closeDescription = () => {
+const closeDescription = async () => {
   descriptionId.value = null
+
+  if (activeCell.value === 1) {
+    highlightedCell.value = 6
+
+    await delay(1000)
+
+    highlightedCell.value = undefined
+    activeCell.value = 6
+    openDescription(activeCell.value)
+    saveToHistory()
+  }
 }
 
-watch(props, (newValue) => {
-  newValue.diceNumber && movePlayer()
+watch(props, async (newValue) => {
+  if (props.isNewGame) return
+  if (activeCell.value === 68 && props.diceNumber === 6) {
+    await startGame()
+  } else {
+    newValue.diceNumber && await movePlayer()
+  }
 })
 </script>
 
@@ -58,6 +102,7 @@ watch(props, (newValue) => {
     <Cells
         :active-cell="activeCell"
         :description-id="descriptionId"
+        :highlighted-cell="highlightedCell"
         @open-description="openDescription"
         @close-description="closeDescription"
     ></Cells>
