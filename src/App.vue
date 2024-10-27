@@ -24,7 +24,7 @@ header {
 }
 
 nav {
-  width: 860px;
+  width: 804px;
   margin: 1rem auto 0;
   display: flex;
   flex-direction: row;

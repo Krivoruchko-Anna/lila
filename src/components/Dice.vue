@@ -19,11 +19,11 @@ const emits = defineEmits(['throw'])
 
 <template>
   <div class="dice">
-    <p v-if="isGameFinished">The Game is over</p>
+    <p class="dice__final" v-if="isGameFinished">Congratulations! You have reached the Cosmic Conscience.</p>
     <div
         class="dice__text"
         :class="{ 'visible': isNewGame && number || isGameFinished}">
-      Throw 6 to start the game
+      {{ isGameFinished ? 'Click here to play again. The history will be cleared.' : 'Throw 6 to start the game' }}
     </div>
     <img
         class="dice__number"
@@ -56,6 +56,10 @@ const emits = defineEmits(['throw'])
   &__number {
     animation: appear 0.5s ease-in-out;
     cursor: pointer;
+
+    &:hover {
+      animation: scale 0.5s ease-in-out;
+    }
   }
 
   &__loader {
@@ -64,24 +68,20 @@ const emits = defineEmits(['throw'])
   }
 
   &__text {
-    color: white;
     margin-bottom: 6px;
     transition: 0.1s all;
     opacity: 0;
     pointer-events: none;
+    color: white;
   }
 
-  &:hover {
-    animation: scale 0.5s ease-in-out;
-
-    .dice__text {
-      opacity: 0;
-    }
+  &__final {
+    font-size: 18px;
   }
 }
 
 .visible {
-  opacity: 1;
+  opacity: 0.6;
 }
 
 @keyframes appear {

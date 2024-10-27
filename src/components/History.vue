@@ -9,7 +9,16 @@ const hasHistory = computed(() => !store.history || !store.history.length)
 
 <template>
   <div class="history" :class="{ 'hidden': hasHistory }">
-    <h2>Game History</h2>
+    <div class="history__header">
+      <h2>Game History</h2>
+      <img
+          src="../assets/download.svg"
+          alt="download"
+          title="Download the history"
+          @click="store.downloadHistoryAsPdf()"
+      >
+    </div>
+
 
     <div class="history__list">
       <div v-for="item in store.history" class="history__item">
@@ -28,6 +37,18 @@ const hasHistory = computed(() => !store.history || !store.history.length)
   margin-top: 94px;
   color: white;
 
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    line-height: normal;
+
+    img {
+      height: 20px;
+      cursor: pointer;
+    }
+  }
+
   &__list {
     width: 100%;
     margin-top: 15px;
@@ -39,7 +60,7 @@ const hasHistory = computed(() => !store.history || !store.history.length)
     display: flex;
     justify-content: space-between;
     gap: 20px;
-    border-bottom: 1px #beaad3 solid;
+    border-bottom: 1px #5a5063 solid;
     padding: 8px 0;
   }
 

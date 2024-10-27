@@ -27,8 +27,7 @@ const handleDiceClick = () => {
   if (isGameFinished.value) {
     isGameFinished.value = false
     isNewGame.value = true
-
-    store.updateHistory([])
+    store.clearHistory()
   }
 
   setTimeout(() => {
@@ -38,6 +37,11 @@ const handleDiceClick = () => {
 
 const finishTheGame = () => {
   isGameFinished.value = true
+  isNewGame.value = true
+}
+
+const restart = () => {
+  store.clearHistory()
   isNewGame.value = true
 }
 
@@ -52,6 +56,14 @@ onMounted(() => {
 
 <template>
   <main class="playing-field">
+    <img
+        class="playing-field__restart"
+        src="../assets/reload.svg"
+        alt="restart"
+        title="Restart the game"
+        @click="restart"
+    >
+
     <div>
       <Dice :number="diceNumber"
             :is-new-game="isNewGame"
@@ -62,21 +74,37 @@ onMounted(() => {
       <PlayingField
           :dice-number="diceNumber"
           :is-new-game="isNewGame"
+          :is-game-finished="isGameFinished"
           :prevent-move="preventMove"
           @end="finishTheGame"
       />
     </div>
 
-    <History></History>
+    <History />
   </main>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .playing-field {
+  position: relative;
   margin-top: 1rem;
   display: flex;
   justify-content: center;
   gap: 20px;
   transform: translateX(150px);
+
+  &__restart {
+    position: absolute;
+    right: 0;
+    top: -52px;
+    width: 22px;
+    cursor: pointer;
+    opacity: 0.4;
+    transition: 0.3s all;
+
+    &:hover{
+      opacity: 1;
+    }
+  }
 }
 </style>

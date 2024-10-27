@@ -1,8 +1,9 @@
 <script setup>
-import {onMounted, ref, watch} from "vue";
+import {computed, onMounted, ref, watch} from "vue";
 import { Cards } from "@/data/cards.js";
 import { TeleportCells } from "@/data/teleportCells.js";
 import { useHistoryStore } from "@/stores/history.js";
+import { useFieldStore } from "@/stores/field.js";
 import Cells from "@/components/Cells.vue";
 
 const props = defineProps({
@@ -17,21 +18,26 @@ const props = defineProps({
   preventMove: {
     type: Boolean,
     required: false
+  },
+  isGameFinished: {
+    type: Boolean,
+    required: false
   }
 })
 
 const emits = defineEmits(["end"])
 
 const store = useHistoryStore()
+const filedStore = useFieldStore()
 
-const activeCell = ref(68);
+const activeCell = computed(() => filedStore.activeCell);
 const highlightedCell = ref();
 
 const descriptionId = ref(null)
 
 const handlePlayerTeleport = async () => {
   await delay(600)
-  activeCell.value = TeleportCells[activeCell.value]
+  filedStore.updateActiveCell(TeleportCells[activeCell.value])
   highlightedCell.value = undefined
 
   await delay(900)
@@ -41,10 +47,10 @@ const handlePlayerTeleport = async () => {
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms))
 
 const movePlayer = async () => {
-  if (props.isNewGame && props.diceNumber + activeCell.value > 72) return
+  if (props.isNewGame || props.diceNumber + activeCell.value > 72) return
 
   for (let i = 0; i < props.diceNumber; i++) {
-    activeCell.value += 1
+    filedStore.updateActiveCell(activeCell.value + 1)
     await delay(500)
   }
 
@@ -65,7 +71,7 @@ const startGame = async () => {
   await delay(1000)
 
   highlightedCell.value = undefined
-  activeCell.value = 1
+  filedStore.updateActiveCell(1)
   openDescription(activeCell.value)
   saveToHistory()
 }
@@ -124,13 +130,16 @@ watch(props, async (newValue) => {
 
 onMounted(() => {
   if (store.history.length) {
-    activeCell.value = store.history[0].number
+    filedStore.updateActiveCell(store.history[0].number)
   }
 })
 </script>
 
 <template>
-  <div class="field">
+  <div
+      class="field"
+      :class="{'finished': isGameFinished}"
+  >
     <Cells
         :active-cell="activeCell"
         :description-id="descriptionId"
@@ -151,6 +160,10 @@ onMounted(() => {
   background-size: contain;
   box-shadow: 0 0 60px #18181a;
   border-radius: 8px;
+}
+
+.finished {
+  box-shadow: 0 0 60px rgba(179, 172, 231, 0.55);
 }
 
 h1 {
