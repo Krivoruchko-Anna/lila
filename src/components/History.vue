@@ -13,7 +13,8 @@ const hasHistory = computed(() => !store.history || !store.history.length)
 
     <div class="history__list">
       <div v-for="item in store.history" class="history__item">
-        {{ item }}
+        <p>{{ item.title }}</p>
+        <p>{{ item.time }}</p>
       </div>
     </div>
   </div>
@@ -35,6 +36,9 @@ const hasHistory = computed(() => !store.history || !store.history.length)
   }
 
   &__item {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
     border-bottom: 1px #beaad3 solid;
     padding: 8px 0;
   }

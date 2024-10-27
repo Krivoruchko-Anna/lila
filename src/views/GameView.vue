@@ -1,10 +1,15 @@
 <script setup>
 import { ref } from "vue";
+import { useHistoryStore } from "@/stores/history.js";
 import PlayingField from "@/components/PlayingField.vue";
 import Dice from "@/components/Dice.vue";
 import History from "@/components/History.vue";
 
+const store = useHistoryStore()
+
 const isNewGame = ref(true)
+const isGameFinished = ref(false)
+const diceNumber = ref(1)
 
 const setRandomDiceNumber = () => {
   diceNumber.value =  Math.floor(Math.random() * 6) + 1;
@@ -15,14 +20,24 @@ const setRandomDiceNumber = () => {
 }
 
 const handleDiceClick = () => {
-  diceNumber.value = null;
+  diceNumber.value = null
+
+  if (isGameFinished.value) {
+    isGameFinished.value = false
+    isNewGame.value = true
+
+    store.updateHistory([])
+  }
 
   setTimeout(() => {
     setRandomDiceNumber()
   }, 1400)
 }
 
-const diceNumber = ref(1);
+const finishTheGame = () => {
+  isGameFinished.value = true
+  isNewGame.value = true
+}
 </script>
 
 <template>
@@ -30,10 +45,15 @@ const diceNumber = ref(1);
     <div>
       <Dice :number="diceNumber"
             :is-new-game="isNewGame"
+            :is-game-finished="isGameFinished"
             @throw="handleDiceClick"
       ></Dice>
 
-      <PlayingField :dice-number="diceNumber" :is-new-game="isNewGame" />
+      <PlayingField
+          :dice-number="diceNumber"
+          :is-new-game="isNewGame"
+          @end="finishTheGame"
+      />
     </div>
 
     <History></History>
@@ -42,10 +62,10 @@ const diceNumber = ref(1);
 
 <style scoped>
 .playing-field {
-  margin-top: 3rem;
+  margin-top: 2rem;
   display: flex;
   justify-content: center;
-  gap: 40px;
+  gap: 20px;
   transform: translateX(150px);
 }
 </style>

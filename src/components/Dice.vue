@@ -7,6 +7,10 @@ defineProps({
   isNewGame: {
     type: Boolean,
     required: false
+  },
+  isGameFinished: {
+    type: Boolean,
+    required: false
   }
 })
 
@@ -15,9 +19,10 @@ const emits = defineEmits(['throw'])
 
 <template>
   <div class="dice">
+    <p v-if="isGameFinished">The Game is over</p>
     <div
         class="dice__text"
-        :class="{ 'visible': isNewGame }">
+        :class="{ 'visible': isNewGame && number || isGameFinished}">
       Throw 6 to start the game
     </div>
     <img
@@ -61,7 +66,7 @@ const emits = defineEmits(['throw'])
   &__text {
     color: white;
     margin-bottom: 6px;
-    transition: 0.3s all;
+    transition: 0.1s all;
     opacity: 0;
     pointer-events: none;
   }

@@ -8,25 +8,12 @@
   align-content: center;
   margin: 0 auto;
   font-weight: normal;
-  background-image: url("../src/assets/background.jpg");
-  background-size: cover;
-  background-color: #b6c5f5;
+  /*background-image: url("../src/assets/background.jpg");*/
+  /*background-size: cover;*/
+  /*background-color: #b6c5f5;*/
+  background-color: #292929;
   background-blend-mode: multiply;
   filter: saturate(0.8);
-}
-
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-  padding: 3px;
-}
-
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
 }
 
 @media (min-width: 1024px) {

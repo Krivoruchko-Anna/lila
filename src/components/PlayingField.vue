@@ -16,6 +16,8 @@ const props = defineProps({
   }
 })
 
+const emits = defineEmits(["end"])
+
 const store = useHistoryStore()
 
 const activeCell = ref(68);
@@ -65,7 +67,22 @@ const startGame = async () => {
 }
 
 const saveToHistory = () => {
-  store.updateHistory(Cards[activeCell.value].title)
+  const historyCell = Cards[activeCell.value].title
+  const timeStamp = getCurrentTime()
+  store.updateHistory({ title: historyCell, time: timeStamp })
+
+  if (activeCell.value === 68) {
+    emits("end")
+  }
+}
+
+const getCurrentTime = () => {
+  const currentTime = new Date();
+
+  const hours = currentTime.getHours();
+  const minutes = String(currentTime.getMinutes()).padStart(2, '0');
+
+  return `${hours}:${minutes}`
 }
 
 const openDescription = (cell) => {
