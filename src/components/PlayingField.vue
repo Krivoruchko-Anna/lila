@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch } from "vue";
+import {onMounted, ref, watch} from "vue";
 import { Cards } from "@/data/cards.js";
 import { TeleportCells } from "@/data/teleportCells.js";
 import { useHistoryStore } from "@/stores/history.js";
@@ -11,6 +11,10 @@ const props = defineProps({
     required: false
   },
   isNewGame: {
+    type: Boolean,
+    required: false
+  },
+  preventMove: {
     type: Boolean,
     required: false
   }
@@ -69,7 +73,12 @@ const startGame = async () => {
 const saveToHistory = () => {
   const historyCell = Cards[activeCell.value].title
   const timeStamp = getCurrentTime()
-  store.updateHistory({ title: historyCell, time: timeStamp })
+  store.updateHistory({
+    number: activeCell.value,
+    title: historyCell,
+    time: timeStamp,
+    dice: props.diceNumber,
+  })
 
   if (activeCell.value === 68) {
     emits("end")
@@ -109,7 +118,13 @@ watch(props, async (newValue) => {
   if (activeCell.value === 68 && props.diceNumber === 6) {
     await startGame()
   } else {
-    newValue.diceNumber && await movePlayer()
+    newValue.diceNumber && !props.preventMove && await movePlayer()
+  }
+})
+
+onMounted(() => {
+  if (store.history.length) {
+    activeCell.value = store.history[0].number
   }
 })
 </script>

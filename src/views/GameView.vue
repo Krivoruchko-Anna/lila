@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useHistoryStore } from "@/stores/history.js";
 import PlayingField from "@/components/PlayingField.vue";
 import Dice from "@/components/Dice.vue";
@@ -10,6 +10,7 @@ const store = useHistoryStore()
 const isNewGame = ref(true)
 const isGameFinished = ref(false)
 const diceNumber = ref(1)
+const preventMove = ref(false)
 
 const setRandomDiceNumber = () => {
   diceNumber.value =  Math.floor(Math.random() * 6) + 1;
@@ -21,6 +22,7 @@ const setRandomDiceNumber = () => {
 
 const handleDiceClick = () => {
   diceNumber.value = null
+  preventMove.value = false
 
   if (isGameFinished.value) {
     isGameFinished.value = false
@@ -38,6 +40,14 @@ const finishTheGame = () => {
   isGameFinished.value = true
   isNewGame.value = true
 }
+
+onMounted(() => {
+  if (store.history.length) {
+    isNewGame.value = false
+    diceNumber.value = store.history[0].dice
+    preventMove.value = true
+  }
+})
 </script>
 
 <template>
@@ -52,6 +62,7 @@ const finishTheGame = () => {
       <PlayingField
           :dice-number="diceNumber"
           :is-new-game="isNewGame"
+          :prevent-move="preventMove"
           @end="finishTheGame"
       />
     </div>
@@ -62,7 +73,7 @@ const finishTheGame = () => {
 
 <style scoped>
 .playing-field {
-  margin-top: 2rem;
+  margin-top: 1rem;
   display: flex;
   justify-content: center;
   gap: 20px;

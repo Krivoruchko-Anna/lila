@@ -1,5 +1,9 @@
 @import './base.css';
 
+body {
+  position: relative;
+}
+
 #app {
   width: 100vw;
   min-height: 100vh;

@@ -24,7 +24,7 @@ const hasHistory = computed(() => !store.history || !store.history.length)
 .history {
   display: flex;
   flex-direction: column;
-  width: 260px;
+  width: 290px;
   margin-top: 94px;
   color: white;
 
