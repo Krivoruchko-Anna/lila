@@ -1,5 +1,5 @@
 <script setup>
-import {computed, onMounted, ref, watch} from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { Cards } from "@/data/cards.js";
 import { TeleportCells } from "@/data/teleportCells.js";
 import { useHistoryStore } from "@/stores/history.js";
@@ -104,19 +104,22 @@ const openDescription = (cell) => {
   descriptionId.value = cell
 }
 
-const closeDescription = async () => {
-  descriptionId.value = null
-
+const checkGameStart = async () => {
   if (activeCell.value === 1) {
     highlightedCell.value = 6
 
     await delay(1000)
 
     highlightedCell.value = undefined
-    activeCell.value = 6
+    filedStore.updateActiveCell(6)
     openDescription(activeCell.value)
     saveToHistory()
   }
+}
+
+const closeDescription = async () => {
+  descriptionId.value = null
+  await checkGameStart()
 }
 
 watch(props, async (newValue) => {

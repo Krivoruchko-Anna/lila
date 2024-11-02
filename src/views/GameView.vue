@@ -1,11 +1,13 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import { useHistoryStore } from "@/stores/history.js";
+import { useFieldStore } from "@/stores/field.js";
 import PlayingField from "@/components/PlayingField.vue";
 import Dice from "@/components/Dice.vue";
 import History from "@/components/History.vue";
 
 const store = useHistoryStore()
+const filedStore = useFieldStore()
 
 const isNewGame = ref(true)
 const isGameFinished = ref(false)
@@ -43,6 +45,7 @@ const finishTheGame = () => {
 const restart = () => {
   store.clearHistory()
   isNewGame.value = true
+  filedStore.updateActiveCell(68)
 }
 
 onMounted(() => {
@@ -57,6 +60,7 @@ onMounted(() => {
 <template>
   <main class="playing-field">
     <img
+        v-if="store.history.length"
         class="playing-field__restart"
         src="../assets/reload.svg"
         alt="restart"
