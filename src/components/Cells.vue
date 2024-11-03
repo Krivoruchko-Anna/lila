@@ -1,6 +1,7 @@
 <script setup>
 import Cell from "@/components/Cell.vue";
 import CellDescription from "@/components/CellDescription.vue";
+import { useFieldStore } from "@/stores/field.js";
 
 defineProps({
   activeCell: {
@@ -17,9 +18,9 @@ defineProps({
   }
 })
 
-const emits = defineEmits(["close-description", "open-description"])
+const filedStore = useFieldStore()
 
-const numbers = [72, 71, 70, 69, 68, 67, 66, 65, 64, 55, 56, 57, 58, 59, 60, 61, 62, 63, 54, 53, 52, 51, 50, 49, 48, 47, 46, 37, 38, 39, 40, 41, 42, 43, 44, 45, 36, 35, 34, 33, 32, 31, 30, 29, 28, 19, 20, 21, 22, 23, 24, 25, 26, 27, 18, 17, 16, 15, 14, 13, 12, 11, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+const emits = defineEmits(["close-description", "open-description"])
 
 const showDescription = (cell) => {
   emits("open-description", cell)
@@ -34,7 +35,7 @@ const closeDescription = () => {
 <template>
   <div class="cells">
     <Cell
-        v-for="cell in numbers"
+        v-for="cell in filedStore.numbers"
         :key="cell"
         :cell="cell"
         :active-id="activeCell"

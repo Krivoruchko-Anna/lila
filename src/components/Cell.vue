@@ -36,7 +36,7 @@ defineProps({
     <img
         class="player"
         v-show="isActive"
-        src="../assets/player.svg" alt="player"
+        src="../assets/images/player.svg" alt="player"
     >
   </div>
 </template>

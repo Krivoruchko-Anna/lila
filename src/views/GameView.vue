@@ -62,7 +62,7 @@ onMounted(() => {
     <img
         v-if="store.history.length"
         class="playing-field__restart"
-        src="../assets/reload.svg"
+        src="../assets/images/reload.svg"
         alt="restart"
         title="Restart the game"
         @click="restart"

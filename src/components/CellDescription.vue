@@ -12,8 +12,12 @@ defineProps({
 <template>
   <div class="cell-description">
     <div class="cell-description__wrapper">
-      <div class="cell-description__title">{{ Cards[cellId].title }}</div>
-      <div class="cell-description__text">{{ Cards[cellId].text }}</div>
+      <div class="cell-description__title">
+        {{ Cards[cellId].title }}
+      </div>
+      <div class="cell-description__text">
+        {{ Cards[cellId].text }}
+      </div>
     </div>
   </div>
 </template>
@@ -25,7 +29,7 @@ defineProps({
   right: 0;
   left: 0;
   bottom: 0;
-  background-color: rgb(23 23 23 / 90%);
+  background-color: var(--color-dark-90);
   z-index: 100;
   overflow: auto;
   padding-top: 140px;
@@ -37,7 +41,7 @@ defineProps({
     display: flex;
     align-items: center;
     flex-direction: column;
-    color: white;
+    color: var(--vt-c-white);
   }
 
   &__title {

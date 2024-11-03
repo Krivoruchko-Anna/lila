@@ -19,7 +19,12 @@ const emits = defineEmits(['throw'])
 
 <template>
   <div class="dice">
-    <p class="dice__final" v-if="isGameFinished">Congratulations! You have reached the Cosmic Conscience.</p>
+    <p
+        class="dice__final"
+        v-if="isGameFinished"
+    >
+      Congratulations! You have reached the Cosmic Conscience.
+    </p>
     <div
         class="dice__text"
         :class="{ 'visible': isNewGame && number || isGameFinished}">
@@ -49,7 +54,6 @@ const emits = defineEmits(['throw'])
   img {
     width: 52px;
     height: 52px;
-    background-color: #241923;
     border-radius: 6px;
   }
 
@@ -82,50 +86,5 @@ const emits = defineEmits(['throw'])
 
 .visible {
   opacity: 0.6;
-}
-
-@keyframes appear {
-  0% {
-    opacity: 0.6;
-  }
-  60% {
-    opacity: 1;
-  }
-}
-
-@keyframes scale {
-  0% {
-    scale: 1;
-  }
-  50% {
-    scale: 0.9;
-  }
-  100% {
-    scale: 1;
-  }
-}
-
-@keyframes loader {
-  0% {
-    opacity: 0;
-    rotate: 0deg;
-    scale: 1;
-  }
-  20% {
-    scale: 0.6;
-  }
-  40% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 1;
-  }
-  80% {
-    scale: 1;
-  }
-  100% {
-    opacity: 0.2;
-    rotate: 360deg;
-  }
 }
 </style>

@@ -1,0 +1,13 @@
+@mixin scrollbar-styles {
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--color-violet-light);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-violet-dark);
+  }
+}

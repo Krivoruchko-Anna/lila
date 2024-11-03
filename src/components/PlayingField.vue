@@ -159,14 +159,14 @@ onMounted(() => {
   height: 688px;
   margin-top: 1rem;
   padding-bottom: 3rem;
-  background-image: url("../assets/game-field.jpg");
+  background-image: url("../assets/images/game-field.jpg");
   background-size: contain;
-  box-shadow: 0 0 60px #18181a;
+  box-shadow: 0 0 60px var(--color-dark);
   border-radius: 8px;
 }
 
 .finished {
-  box-shadow: 0 0 60px rgba(179, 172, 231, 0.55);
+  box-shadow: 0 0 60px var(--color-violet-medium);
 }
 
 h1 {
