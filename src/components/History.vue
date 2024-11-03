@@ -1,6 +1,6 @@
 <script setup>
-import { computed } from "vue";
-import { useHistoryStore } from "@/stores/history.js";
+import { computed } from 'vue'
+import { useHistoryStore } from '@/stores/history.js'
 
 const store = useHistoryStore()
 
@@ -9,23 +9,25 @@ const hasHistory = computed(() => !store.history || !store.history.length)
 
 <template>
   <div
-      class="history"
-      :class="{ 'hidden': hasHistory }">
+    class="history"
+    :class="{ hidden: hasHistory }"
+  >
     <div class="history__header">
       <h2>Game History</h2>
       <img
-          src="../assets/images/download.svg"
-          alt="download"
-          title="Download the history"
-          @click="store.downloadHistoryAsPdf()"
-      >
+        src="../assets/images/download.svg"
+        alt="download"
+        title="Download the history"
+        @click="store.downloadHistoryAsPdf()"
+      />
     </div>
 
     <div class="history__list">
       <div
-          v-for="item in store.history"
-          :key="item.title"
-          class="history__item">
+        v-for="item in store.history"
+        :key="item.title"
+        class="history__item"
+      >
         <p>{{ item.title }}</p>
         <p>{{ item.time }}</p>
       </div>
@@ -34,7 +36,7 @@ const hasHistory = computed(() => !store.history || !store.history.length)
 </template>
 
 <style lang="scss">
-@import "src/styles/mixins";
+@import 'src/styles/mixins';
 
 .history {
   display: flex;

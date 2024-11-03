@@ -20,28 +20,34 @@ const emits = defineEmits(['throw'])
 <template>
   <div class="dice">
     <p
-        class="dice__final"
-        v-if="isGameFinished"
+      class="dice__final"
+      v-if="isGameFinished"
     >
       Congratulations! You have reached the Cosmic Conscience.
     </p>
     <div
-        class="dice__text"
-        :class="{ 'visible': isNewGame && number || isGameFinished}">
-      {{ isGameFinished ? 'Click here to play again. The history will be cleared.' : 'Throw 6 to start the game' }}
+      class="dice__text"
+      :class="{ visible: (isNewGame && number) || isGameFinished }"
+    >
+      {{
+        isGameFinished
+          ? 'Click here to play again. The history will be cleared.'
+          : 'Throw 6 to start the game'
+      }}
     </div>
     <img
-        class="dice__number"
-        v-if="number"
-        :src="`src/assets/dice/dice-${number}.svg`"
-        :alt="number"
-        @click="emits('throw')"
-    >
+      class="dice__number"
+      v-if="number"
+      :src="`src/assets/dice/dice-${number}.svg`"
+      :alt="number"
+      @click="emits('throw')"
+    />
     <img
-        v-else
-        class="dice__loader"
-        src="@/assets/dice/dice-loader.svg"
-        alt="loader">
+      v-else
+      class="dice__loader"
+      src="@/assets/dice/dice-loader.svg"
+      alt="loader"
+    />
   </div>
 </template>
 

@@ -1,10 +1,10 @@
 <script setup>
-import { computed, onMounted, ref, watch } from "vue";
-import { Cards } from "@/data/cards.js";
-import { TeleportCells } from "@/data/teleportCells.js";
-import { useHistoryStore } from "@/stores/history.js";
-import { useFieldStore } from "@/stores/field.js";
-import Cells from "@/components/Cells.vue";
+import { computed, onMounted, ref, watch } from 'vue'
+import { Cards } from '@/data/cards.js'
+import { TeleportCells } from '@/data/teleportCells.js'
+import { useHistoryStore } from '@/stores/history.js'
+import { useFieldStore } from '@/stores/field.js'
+import Cells from '@/components/Cells.vue'
 
 const props = defineProps({
   diceNumber: {
@@ -25,13 +25,13 @@ const props = defineProps({
   }
 })
 
-const emits = defineEmits(["end"])
+const emits = defineEmits(['end'])
 
 const store = useHistoryStore()
 const filedStore = useFieldStore()
 
-const activeCell = computed(() => filedStore.activeCell);
-const highlightedCell = ref();
+const activeCell = computed(() => filedStore.activeCell)
+const highlightedCell = ref()
 
 const descriptionId = ref(null)
 
@@ -44,7 +44,7 @@ const handlePlayerTeleport = async () => {
   openDescription(activeCell.value)
 }
 
-const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms))
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
 const movePlayer = async () => {
   if (props.isNewGame || props.diceNumber + activeCell.value > 72) return
@@ -55,7 +55,7 @@ const movePlayer = async () => {
   }
 
   if (TeleportCells[activeCell.value]) {
-    highlightedCell.value = TeleportCells[activeCell.value];
+    highlightedCell.value = TeleportCells[activeCell.value]
     await handlePlayerTeleport()
   } else {
     await delay(500)
@@ -63,7 +63,7 @@ const movePlayer = async () => {
   }
 
   saveToHistory()
-};
+}
 
 const startGame = async () => {
   highlightedCell.value = 1
@@ -83,19 +83,19 @@ const saveToHistory = () => {
     number: activeCell.value,
     title: historyCell,
     time: timeStamp,
-    dice: props.diceNumber,
+    dice: props.diceNumber
   })
 
   if (activeCell.value === 68) {
-    emits("end")
+    emits('end')
   }
 }
 
 const getCurrentTime = () => {
-  const currentTime = new Date();
+  const currentTime = new Date()
 
-  const hours = currentTime.getHours();
-  const minutes = String(currentTime.getMinutes()).padStart(2, '0');
+  const hours = currentTime.getHours()
+  const minutes = String(currentTime.getMinutes()).padStart(2, '0')
 
   return `${hours}:${minutes}`
 }
@@ -127,7 +127,7 @@ watch(props, async (newValue) => {
   if (activeCell.value === 68 && props.diceNumber === 6) {
     await startGame()
   } else {
-    newValue.diceNumber && !props.preventMove && await movePlayer()
+    newValue.diceNumber && !props.preventMove && (await movePlayer())
   }
 })
 
@@ -140,15 +140,15 @@ onMounted(() => {
 
 <template>
   <div
-      class="field"
-      :class="{'finished': isGameFinished}"
+    class="field"
+    :class="{ finished: isGameFinished }"
   >
     <Cells
-        :active-cell="activeCell"
-        :description-id="descriptionId"
-        :highlighted-cell="highlightedCell"
-        @open-description="openDescription"
-        @close-description="closeDescription"
+      :active-cell="activeCell"
+      :description-id="descriptionId"
+      :highlighted-cell="highlightedCell"
+      @open-description="openDescription"
+      @close-description="closeDescription"
     ></Cells>
   </div>
 </template>
@@ -159,7 +159,7 @@ onMounted(() => {
   height: 688px;
   margin-top: 1rem;
   padding-bottom: 3rem;
-  background-image: url("../assets/images/game-field.jpg");
+  background-image: url('../assets/images/game-field.jpg');
   background-size: contain;
   box-shadow: 0 0 60px var(--color-dark);
   border-radius: 8px;

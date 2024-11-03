@@ -21,23 +21,24 @@ defineProps({
     required: false
   }
 })
-
 </script>
 
 <template>
-  <div class="cell"
-       :class="{
-      'active': isActive,
+  <div
+    class="cell"
+    :class="{
+      active: isActive,
       'active-teleport': highlightedCell === cell,
       'final-cell': activeId === 68 && activeId === cell
-  }"
-       :data-id="activeId"
+    }"
+    :data-id="activeId"
   >
     <img
-        class="player"
-        v-show="isActive"
-        src="../assets/images/player.svg" alt="player"
-    >
+      class="player"
+      v-show="isActive"
+      src="../assets/images/player.svg"
+      alt="player"
+    />
   </div>
 </template>
 

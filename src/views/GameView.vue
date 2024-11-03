@@ -1,10 +1,10 @@
 <script setup>
-import { onMounted, ref } from "vue";
-import { useHistoryStore } from "@/stores/history.js";
-import { useFieldStore } from "@/stores/field.js";
-import PlayingField from "@/components/PlayingField.vue";
-import Dice from "@/components/Dice.vue";
-import History from "@/components/History.vue";
+import { onMounted, ref } from 'vue'
+import { useHistoryStore } from '@/stores/history.js'
+import { useFieldStore } from '@/stores/field.js'
+import PlayingField from '@/components/PlayingField.vue'
+import Dice from '@/components/Dice.vue'
+import History from '@/components/History.vue'
 
 const store = useHistoryStore()
 const filedStore = useFieldStore()
@@ -15,7 +15,7 @@ const diceNumber = ref(1)
 const preventMove = ref(false)
 
 const setRandomDiceNumber = () => {
-  diceNumber.value =  Math.floor(Math.random() * 6) + 1;
+  diceNumber.value = Math.floor(Math.random() * 6) + 1
 
   if (diceNumber.value === 6) {
     isNewGame.value = false
@@ -60,27 +60,28 @@ onMounted(() => {
 <template>
   <main class="playing-field">
     <img
-        v-if="store.history.length"
-        class="playing-field__restart"
-        src="../assets/images/reload.svg"
-        alt="restart"
-        title="Restart the game"
-        @click="restart"
-    >
+      v-if="store.history.length"
+      class="playing-field__restart"
+      src="../assets/images/reload.svg"
+      alt="restart"
+      title="Restart the game"
+      @click="restart"
+    />
 
     <div>
-      <Dice :number="diceNumber"
-            :is-new-game="isNewGame"
-            :is-game-finished="isGameFinished"
-            @throw="handleDiceClick"
+      <Dice
+        :number="diceNumber"
+        :is-new-game="isNewGame"
+        :is-game-finished="isGameFinished"
+        @throw="handleDiceClick"
       ></Dice>
 
       <PlayingField
-          :dice-number="diceNumber"
-          :is-new-game="isNewGame"
-          :is-game-finished="isGameFinished"
-          :prevent-move="preventMove"
-          @end="finishTheGame"
+        :dice-number="diceNumber"
+        :is-new-game="isNewGame"
+        :is-game-finished="isGameFinished"
+        :prevent-move="preventMove"
+        @end="finishTheGame"
       />
     </div>
 
@@ -106,7 +107,7 @@ onMounted(() => {
     opacity: 0.4;
     transition: 0.3s all;
 
-    &:hover{
+    &:hover {
       opacity: 1;
     }
   }

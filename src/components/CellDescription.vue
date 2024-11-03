@@ -1,11 +1,11 @@
 <script setup>
-import { Cards } from "@/data/cards.js";
+import { Cards } from '@/data/cards.js'
 
 defineProps({
   cellId: {
     type: Number,
     required: true
-  },
+  }
 })
 </script>
 
