@@ -49,7 +49,7 @@ body {
   align-content: center;
   margin: 0 auto;
   font-weight: normal;
-  background-color: #292929;
+  background-color: var(--color-violet-light-dark);
   background-blend-mode: multiply;
   filter: saturate(0.8);
 }

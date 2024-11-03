@@ -35,15 +35,6 @@ const highlightedCell = ref()
 
 const descriptionId = ref(null)
 
-const handlePlayerTeleport = async () => {
-  await delay(600)
-  filedStore.updateActiveCell(TeleportCells[activeCell.value])
-  highlightedCell.value = undefined
-
-  await delay(900)
-  openDescription(activeCell.value)
-}
-
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
 const movePlayer = async () => {
@@ -55,8 +46,7 @@ const movePlayer = async () => {
   }
 
   if (TeleportCells[activeCell.value]) {
-    highlightedCell.value = TeleportCells[activeCell.value]
-    await handlePlayerTeleport()
+    moveToCell(activeCell.value)
   } else {
     await delay(500)
     openDescription(activeCell.value)
@@ -65,13 +55,8 @@ const movePlayer = async () => {
   saveToHistory()
 }
 
-const startGame = async () => {
-  highlightedCell.value = 1
-
-  await delay(1000)
-
-  highlightedCell.value = undefined
-  filedStore.updateActiveCell(1)
+const moveToCell = (cell) => {
+  filedStore.updateActiveCell(cell)
   openDescription(activeCell.value)
   saveToHistory()
 }
@@ -117,15 +102,33 @@ const checkGameStart = async () => {
   }
 }
 
+const checkTeleportCell = async () => {
+  if (TeleportCells[activeCell.value]) {
+    highlightedCell.value = TeleportCells[activeCell.value]
+    await delay(600)
+    filedStore.updateActiveCell(TeleportCells[activeCell.value])
+    highlightedCell.value = undefined
+
+    await delay(900)
+    openDescription(activeCell.value)
+    saveToHistory()
+  }
+}
+
 const closeDescription = async () => {
   descriptionId.value = null
   await checkGameStart()
+  await checkTeleportCell()
 }
 
 watch(props, async (newValue) => {
   if (props.isNewGame) return
   if (activeCell.value === 68 && props.diceNumber === 6) {
-    await startGame()
+    highlightedCell.value = 1
+    await delay(1000)
+    highlightedCell.value = undefined
+
+    moveToCell(1)
   } else {
     newValue.diceNumber && !props.preventMove && (await movePlayer())
   }
@@ -161,12 +164,12 @@ onMounted(() => {
   padding-bottom: 3rem;
   background-image: url('../assets/images/game-field.jpg');
   background-size: contain;
-  box-shadow: 0 0 60px var(--color-dark);
+  box-shadow: 0 0 16px var(--color-dark);
   border-radius: 8px;
 }
 
 .finished {
-  box-shadow: 0 0 60px var(--color-violet-medium);
+  box-shadow: 0 0 12px var(--color-violet-medium);
 }
 
 h1 {
