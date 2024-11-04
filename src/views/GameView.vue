@@ -7,7 +7,7 @@ import Dice from '@/components/Dice.vue'
 import History from '@/components/History.vue'
 
 const store = useHistoryStore()
-const filedStore = useFieldStore()
+const fieldStore = useFieldStore()
 
 const isNewGame = ref(true)
 const isGameFinished = ref(false)
@@ -42,10 +42,10 @@ const finishTheGame = () => {
   isNewGame.value = true
 }
 
-const restart = () => {
+const restartGame = () => {
   store.clearHistory()
   isNewGame.value = true
-  filedStore.updateActiveCell(68)
+  fieldStore.updateActiveCell(68)
 }
 
 onMounted(() => {
@@ -59,15 +59,6 @@ onMounted(() => {
 
 <template>
   <main class="playing-field">
-    <img
-      v-if="store.history.length"
-      class="playing-field__restart"
-      src="../assets/images/reload.svg"
-      alt="restart"
-      title="Restart the game"
-      @click="restart"
-    />
-
     <div>
       <Dice
         :number="diceNumber"
@@ -85,7 +76,7 @@ onMounted(() => {
       />
     </div>
 
-    <History />
+    <History v-if="store.history.length" @set-new-game='restartGame'/>
   </main>
 </template>
 
@@ -96,20 +87,5 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   gap: 20px;
-  transform: translateX(150px);
-
-  &__restart {
-    position: absolute;
-    right: 0;
-    top: -52px;
-    width: 22px;
-    cursor: pointer;
-    opacity: 0.4;
-    transition: 0.3s all;
-
-    &:hover {
-      opacity: 1;
-    }
-  }
 }
 </style>

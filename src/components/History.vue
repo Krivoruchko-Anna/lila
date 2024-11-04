@@ -1,17 +1,23 @@
 <script setup>
-import { computed } from 'vue'
 import { useHistoryStore } from '@/stores/history.js'
 
 const store = useHistoryStore()
+const emits = defineEmits(['setNewGame'])
 
-const hasHistory = computed(() => !store.history || !store.history.length)
+const restart = () => {
+  emits('setNewGame')
+}
 </script>
 
 <template>
-  <div
-    class="history"
-    :class="{ hidden: hasHistory }"
-  >
+  <div class="history">
+    <img
+      class="history__restart"
+      src="../assets/images/reload.svg"
+      alt="restart"
+      title="Restart the game"
+      @click="restart"
+    />
     <div class="history__header">
       <h2>Game History</h2>
       <img
@@ -29,7 +35,7 @@ const hasHistory = computed(() => !store.history || !store.history.length)
         class="history__item"
       >
         <p>{{ item.title }}</p>
-        <p>{{ item.time }}</p>
+        <p class='history__time'>{{ item.time }}</p>
       </div>
     </div>
   </div>
@@ -39,18 +45,32 @@ const hasHistory = computed(() => !store.history || !store.history.length)
 @import 'src/styles/mixins';
 
 .history {
-  display: flex;
-  flex-direction: column;
+  position: absolute;
+  right: -290px;
   width: 290px;
   margin-top: 94px;
-  color: white;
 
   @include scrollbar-styles;
+
+  &__restart {
+    position: absolute;
+    right: 0;
+    top: -148px;
+    width: 22px;
+    cursor: pointer;
+    opacity: 0.4;
+    transition: 0.3s all;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
 
   &__header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding-right: 8px;
     line-height: normal;
 
     img {
@@ -71,7 +91,25 @@ const hasHistory = computed(() => !store.history || !store.history.length)
     justify-content: space-between;
     gap: 20px;
     border-bottom: 1px var(--color-violet-muted) solid;
-    padding: 8px 0;
+    padding: 8px 8px 8px 0;
+  }
+
+  @media (max-width: 1600px) {
+    width: 200px;
+    right: -200px;
+  }
+
+  @media (max-width: 1360px) {
+    width: 180px;
+    right: -180px;
+
+    &__time {
+      display: none;
+    }
+  }
+
+  @media (max-width: 1200px) {
+    display: none;
   }
 }
 </style>
