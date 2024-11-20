@@ -64,7 +64,10 @@ onMounted(() => {
 
 <template>
   <main class="playing-field">
-    <div>
+    <div class='playing-field__small-screen'>
+      Please use a screen with a size of at least 816px to play the game.
+    </div>
+    <div class='playing-field__main'>
       <Dice
         :number="diceNumber"
         :is-new-game="isNewGame"
@@ -92,5 +95,20 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   gap: 20px;
+
+  &__main {
+    @media (max-width: 816px) {
+      display: none;
+    }
+  }
+
+  &__small-screen {
+    display: none;
+    padding: 0 20px;
+
+    @media (max-width: 816px) {
+      display: block;
+    }
+  }
 }
 </style>

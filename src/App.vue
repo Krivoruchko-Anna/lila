@@ -50,6 +50,11 @@ nav {
   a.router-link-exact-active {
     color: var(--color-text);
   }
+
+  @media (max-width: 816px) {
+    width: auto;
+    max-width: 400px;
+  }
 }
 
 header {

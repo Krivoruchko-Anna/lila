@@ -85,6 +85,7 @@
 .about {
   max-width: 770px;
   margin: 60px auto;
+  padding: 0 20px;
 
   &__title {
     font-size: 20px;
