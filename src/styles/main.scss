@@ -43,14 +43,17 @@ body {
 
 #app {
   width: 100vw;
-  min-height: 100vh;
+  height: 100vh;
+  overflow: auto;
   display: flex;
   justify-content: center;
   align-content: center;
   margin: 0 auto;
   font-weight: normal;
   background-color: var(--color-violet-light-dark);
-  background-blend-mode: multiply;
+  background-image: url("../src/assets/images/milky-way-bg.jpg");
+  background-size: cover;
+  background-blend-mode: luminosity;
   filter: saturate(0.8);
 }
 

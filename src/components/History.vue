@@ -22,6 +22,7 @@ const restart = () => {
       <h2>Game History</h2>
       <img
         src="../assets/images/download.svg"
+        class='history__download'
         alt="download"
         title="Download the history"
         @click="store.downloadHistoryAsPdf()"
@@ -58,8 +59,17 @@ const restart = () => {
     top: -148px;
     width: 22px;
     cursor: pointer;
-    opacity: 0.4;
-    transition: 0.3s all;
+    opacity: 0.5;
+    transition: 0.5s all;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  &__download {
+    opacity: 0.6;
+    transition: 0.5s all;
 
     &:hover {
       opacity: 1;

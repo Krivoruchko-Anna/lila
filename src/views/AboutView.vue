@@ -85,7 +85,8 @@
 .about {
   max-width: 770px;
   margin: 60px auto;
-  padding: 0 20px;
+  padding: 20px;
+  background-color: var(--color-dark-60);
 
   &__title {
     font-size: 20px;
