@@ -19,18 +19,14 @@ const props = defineProps({
     type: Boolean,
     required: false
   },
-  isGameFinished: {
-    type: Boolean,
-    required: false
-  }
 })
 
-const emits = defineEmits(['end'])
+const emits = defineEmits(['end', 'show-dice-message'])
 
 const store = useHistoryStore()
-const filedStore = useFieldStore()
+const fieldStore = useFieldStore()
 
-const activeCell = computed(() => filedStore.activeCell)
+const activeCell = computed(() => fieldStore.activeCell)
 const highlightedCell = ref()
 
 const descriptionId = ref(null)
@@ -38,10 +34,14 @@ const descriptionId = ref(null)
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
 const movePlayer = async () => {
-  if (props.isNewGame || props.diceNumber + activeCell.value > 72) return
+  if (props.isNewGame || props.diceNumber + activeCell.value > 72) {
+    const maxAllowedNumber = 72 - activeCell.value
+    emits('show-dice-message', maxAllowedNumber)
+    return
+  }
 
   for (let i = 0; i < props.diceNumber; i++) {
-    filedStore.updateActiveCell(activeCell.value + 1)
+    fieldStore.updateActiveCell(activeCell.value + 1)
     await delay(500)
   }
 
@@ -56,9 +56,8 @@ const movePlayer = async () => {
 }
 
 const moveToCell = (cell) => {
-  filedStore.updateActiveCell(cell)
+  fieldStore.updateActiveCell(cell)
   openDescription(activeCell.value)
-  saveToHistory()
 }
 
 const saveToHistory = () => {
@@ -96,7 +95,7 @@ const checkGameStart = async () => {
     await delay(1000)
 
     highlightedCell.value = undefined
-    filedStore.updateActiveCell(6)
+    fieldStore.updateActiveCell(6)
     openDescription(activeCell.value)
     saveToHistory()
   }
@@ -106,7 +105,7 @@ const checkTeleportCell = async () => {
   if (TeleportCells[activeCell.value]) {
     highlightedCell.value = TeleportCells[activeCell.value]
     await delay(600)
-    filedStore.updateActiveCell(TeleportCells[activeCell.value])
+    fieldStore.updateActiveCell(TeleportCells[activeCell.value])
     highlightedCell.value = undefined
 
     await delay(900)
@@ -129,6 +128,7 @@ watch(props, async (newValue) => {
     highlightedCell.value = undefined
 
     moveToCell(1)
+    saveToHistory()
   } else {
     newValue.diceNumber && !props.preventMove && (await movePlayer())
   }
@@ -136,7 +136,7 @@ watch(props, async (newValue) => {
 
 onMounted(() => {
   if (store.history.length) {
-    filedStore.updateActiveCell(store.history[0].number)
+    fieldStore.updateActiveCell(store.history[0].number)
   }
 })
 </script>
@@ -144,7 +144,7 @@ onMounted(() => {
 <template>
   <div
     class="field"
-    :class="{ finished: isGameFinished }"
+    :class="{ finished: fieldStore.isGameFinished }"
   >
     <Cells
       :active-cell="activeCell"

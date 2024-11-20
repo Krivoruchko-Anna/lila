@@ -1,4 +1,6 @@
 <script setup>
+import { useFieldStore } from '@/stores/field.js'
+
 defineProps({
   number: {
     type: Number,
@@ -8,11 +10,13 @@ defineProps({
     type: Boolean,
     required: false
   },
-  isGameFinished: {
-    type: Boolean,
+  maxAllowedNumber: {
+    type: Number,
     required: false
   }
 })
+
+const fieldStore = useFieldStore()
 
 const emits = defineEmits(['throw'])
 </script>
@@ -21,19 +25,22 @@ const emits = defineEmits(['throw'])
   <div class="dice">
     <p
       class="dice__final"
-      v-if="isGameFinished"
+      v-if="fieldStore.isGameFinished"
     >
       Congratulations! You have reached the Cosmic Conscience.
     </p>
     <div
       class="dice__text"
-      :class="{ visible: (isNewGame && number) || isGameFinished }"
+      :class="{ visible: (isNewGame && number) || fieldStore.isGameFinished }"
     >
       {{
-        isGameFinished
+        fieldStore.isGameFinished
           ? 'Click here to play again. The history will be cleared.'
           : 'Throw 6 to start the game'
       }}
+    </div>
+    <div v-if='maxAllowedNumber' class="dice__text">
+      You need to throw {{ maxAllowedNumber }} or less to continue
     </div>
     <img
       class="dice__number"
@@ -56,6 +63,7 @@ const emits = defineEmits(['throw'])
   text-align: center;
   width: fit-content;
   margin: 0 auto;
+  color: var(--vt-c-text-light-1);
 
   img {
     width: 52px;
@@ -66,9 +74,10 @@ const emits = defineEmits(['throw'])
   &__number {
     animation: appear 0.5s ease-in-out;
     cursor: pointer;
+    transition: 0.5s all;
 
     &:hover {
-      animation: scale 0.5s ease-in-out;
+      scale: 0.9;
     }
   }
 
@@ -82,7 +91,6 @@ const emits = defineEmits(['throw'])
     transition: 0.1s all;
     opacity: 0;
     pointer-events: none;
-    color: white;
   }
 
   &__final {

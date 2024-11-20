@@ -10,9 +10,9 @@ const store = useHistoryStore()
 const fieldStore = useFieldStore()
 
 const isNewGame = ref(true)
-const isGameFinished = ref(false)
 const diceNumber = ref(1)
 const preventMove = ref(false)
+const diceMaxAllowedNumber = ref(null)
 
 const setRandomDiceNumber = () => {
   diceNumber.value = Math.floor(Math.random() * 6) + 1
@@ -24,10 +24,11 @@ const setRandomDiceNumber = () => {
 
 const handleDiceClick = () => {
   diceNumber.value = null
+  diceMaxAllowedNumber.value = null
   preventMove.value = false
 
-  if (isGameFinished.value) {
-    isGameFinished.value = false
+  if (fieldStore.isGameFinished) {
+    fieldStore.updateIsGameFinished(false)
     isNewGame.value = true
     store.clearHistory()
   }
@@ -38,7 +39,7 @@ const handleDiceClick = () => {
 }
 
 const finishTheGame = () => {
-  isGameFinished.value = true
+  fieldStore.updateIsGameFinished(true)
   isNewGame.value = true
 }
 
@@ -46,6 +47,10 @@ const restartGame = () => {
   store.clearHistory()
   isNewGame.value = true
   fieldStore.updateActiveCell(68)
+}
+
+const showDiceMessage = (maxAllowedNumber) => {
+  diceMaxAllowedNumber.value = maxAllowedNumber
 }
 
 onMounted(() => {
@@ -63,16 +68,16 @@ onMounted(() => {
       <Dice
         :number="diceNumber"
         :is-new-game="isNewGame"
-        :is-game-finished="isGameFinished"
+        :max-allowed-number='diceMaxAllowedNumber'
         @throw="handleDiceClick"
       ></Dice>
 
       <PlayingField
         :dice-number="diceNumber"
         :is-new-game="isNewGame"
-        :is-game-finished="isGameFinished"
         :prevent-move="preventMove"
         @end="finishTheGame"
+        @show-dice-message='showDiceMessage'
       />
     </div>
 

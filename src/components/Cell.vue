@@ -68,7 +68,6 @@ defineProps({
   justify-content: center;
   align-items: center;
   background-color: rgb(125 5 129 / 64%);
-  border: 2px solid #7a3d83;
   animation: appear 0.3s ease-in-out;
 
   .player {
