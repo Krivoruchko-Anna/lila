@@ -166,6 +166,7 @@ onMounted(() => {
   background-size: contain;
   box-shadow: 0 0 16px var(--color-dark);
   border-radius: 8px;
+  filter: saturate(0.7);
 }
 
 .finished {

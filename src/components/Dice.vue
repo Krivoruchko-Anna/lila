@@ -1,7 +1,8 @@
 <script setup>
 import { useFieldStore } from '@/stores/field.js'
+import { computed } from 'vue'
 
-defineProps({
+const props = defineProps({
   number: {
     type: Number,
     required: false
@@ -19,6 +20,16 @@ defineProps({
 const fieldStore = useFieldStore()
 
 const emits = defineEmits(['throw'])
+
+const message = computed(() => {
+  if (fieldStore.isGameFinished) {
+    return 'Click here to play again. The history will be cleared.'
+  } else if (props.maxAllowedNumber) {
+    return `You need to throw ${props.maxAllowedNumber} or less to continue`
+  } else if (props.isNewGame) {
+    return 'Throw 6 to start the game'
+  } else return ``
+})
 </script>
 
 <template>
@@ -31,16 +42,9 @@ const emits = defineEmits(['throw'])
     </p>
     <div
       class="dice__text"
-      :class="{ visible: (isNewGame && number) || fieldStore.isGameFinished }"
+      :class="{ visible: (isNewGame && number) || fieldStore.isGameFinished || maxAllowedNumber }"
     >
-      {{
-        fieldStore.isGameFinished
-          ? 'Click here to play again. The history will be cleared.'
-          : 'Throw 6 to start the game'
-      }}
-    </div>
-    <div v-if='maxAllowedNumber' class="dice__text">
-      You need to throw {{ maxAllowedNumber }} or less to continue
+      {{ message }}
     </div>
     <img
       class="dice__number"
@@ -87,7 +91,8 @@ const emits = defineEmits(['throw'])
   }
 
   &__text {
-    margin-bottom: 6px;
+    height: 20px;
+    margin-bottom: 10px;
     transition: 0.1s all;
     opacity: 0;
     pointer-events: none;
