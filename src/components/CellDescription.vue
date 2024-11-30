@@ -13,10 +13,10 @@ defineProps({
   <div class="cell-description">
     <div class="cell-description__wrapper">
       <div class="cell-description__title">
-        {{ Cards[cellId].title }}
+        {{ $t(Cards[cellId].title) }}
       </div>
       <div class="cell-description__text">
-        {{ Cards[cellId].text }}
+        {{ $t(Cards[cellId].text) }}
       </div>
     </div>
   </div>

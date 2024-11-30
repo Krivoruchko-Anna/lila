@@ -19,10 +19,10 @@ const restart = () => {
       @click="restart"
     />
     <div class="history__header">
-      <h2>Game History</h2>
+      <h2>{{ $t('history.historyTitle') }}</h2>
       <img
         src="../assets/images/download.svg"
-        class='history__download'
+        class="history__download"
         alt="download"
         title="Download the history"
         @click="store.downloadHistoryAsPdf()"
@@ -36,7 +36,7 @@ const restart = () => {
         class="history__item"
       >
         <p>{{ item.title }}</p>
-        <p class='history__time'>{{ item.time }}</p>
+        <p class="history__time">{{ item.time }}</p>
       </div>
     </div>
   </div>

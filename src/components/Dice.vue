@@ -1,6 +1,7 @@
 <script setup>
 import { useFieldStore } from '@/stores/field.js'
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 const props = defineProps({
   number: {
@@ -19,15 +20,17 @@ const props = defineProps({
 
 const fieldStore = useFieldStore()
 
+const { t } = useI18n()
+
 const emits = defineEmits(['throw'])
 
 const message = computed(() => {
   if (fieldStore.isGameFinished) {
-    return 'Click here to play again. The history will be cleared.'
+    return t('dice.playAgain')
   } else if (props.maxAllowedNumber) {
-    return `You need to throw ${props.maxAllowedNumber} or less to continue`
+    return t('dice.lastGameLine', { maxAllowedNumber: props.maxAllowedNumber })
   } else if (props.isNewGame) {
-    return 'Throw 6 to start the game'
+    return t('dice.startWithSix')
   } else return ``
 })
 </script>
@@ -38,7 +41,7 @@ const message = computed(() => {
       class="dice__final"
       v-if="fieldStore.isGameFinished"
     >
-      Congratulations! You have reached the Cosmic Conscience.
+      {{ $t('dice.winMessage') }}
     </p>
     <div
       class="dice__text"

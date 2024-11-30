@@ -18,7 +18,7 @@ const props = defineProps({
   preventMove: {
     type: Boolean,
     required: false
-  },
+  }
 })
 
 const emits = defineEmits(['end', 'show-dice-message'])

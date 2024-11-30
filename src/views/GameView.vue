@@ -64,14 +64,14 @@ onMounted(() => {
 
 <template>
   <main class="playing-field">
-    <div class='playing-field__small-screen'>
-      Please use a screen with a size of at least 816px to play the game.
+    <div class="playing-field__small-screen">
+      {{ $t('gameView.smallScreen') }}
     </div>
-    <div class='playing-field__main'>
+    <div class="playing-field__main">
       <Dice
         :number="diceNumber"
         :is-new-game="isNewGame"
-        :max-allowed-number='diceMaxAllowedNumber'
+        :max-allowed-number="diceMaxAllowedNumber"
         @throw="handleDiceClick"
       ></Dice>
 
@@ -80,11 +80,14 @@ onMounted(() => {
         :is-new-game="isNewGame"
         :prevent-move="preventMove"
         @end="finishTheGame"
-        @show-dice-message='showDiceMessage'
+        @show-dice-message="showDiceMessage"
       />
     </div>
 
-    <History v-if="store.history.length" @set-new-game='restartGame'/>
+    <History
+      v-if="store.history.length"
+      @set-new-game="restartGame"
+    />
   </main>
 </template>
 
@@ -104,6 +107,7 @@ onMounted(() => {
 
   &__small-screen {
     display: none;
+    margin-top: 40px;
     padding: 0 20px;
 
     @media (max-width: 816px) {
