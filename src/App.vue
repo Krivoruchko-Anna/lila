@@ -138,6 +138,7 @@ nav {
 
     &:focus {
       border-color: var(--color-violet-light-dark);
+      border-radius: 4px 4px 0 0;
     }
   }
 
@@ -150,7 +151,7 @@ nav {
     list-style: none;
     padding: 0;
     margin: 0;
-    border-radius: 4px;
+    border-radius: 0 0 4px 4px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     z-index: 10;
 

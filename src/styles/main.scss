@@ -53,7 +53,7 @@ body {
   background-color: var(--color-violet-light-dark);
   background-image: url('../src/assets/images/milky-way-bg.jpg');
   background-size: cover;
-  background-blend-mode: luminosity;
+  background-blend-mode: hard-light;
 }
 
 @media (min-width: 1024px) {

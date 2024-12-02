@@ -13,4 +13,8 @@ app.use(i18n)
 app.use(createPinia())
 app.use(router)
 
+app.config.errorHandler = (error) => {
+  console.log(error)
+}
+
 app.mount('#app')

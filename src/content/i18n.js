@@ -84,7 +84,8 @@ const messages = {
       }
     },
     gameView: {
-      smallScreen: 'Please use a screen with a size of at least 816px to play the game.'
+      smallScreen: 'Please use a screen with a size of at least 816px to play the game.',
+      restart: 'Restart the game',
     },
     dice: {
       winMessage: 'Congratulations! You have reached the Cosmic Conscience.',
@@ -93,7 +94,9 @@ const messages = {
       startWithSix: 'Throw 6 to start the game'
     },
     history: {
-      historyTitle: 'Game History'
+      historyTitle: 'Game History',
+      downloadHistory: 'Download the history',
+      confirmRestart: 'Do you want to restart the game? The history will be cleared.',
     },
     cards: {
       1: {
@@ -1181,7 +1184,8 @@ const messages = {
       }
     },
     gameView: {
-      smallScreen: 'Для игры используйте экран размером не менее 816 пикселей.'
+      smallScreen: 'Для игры используйте экран размером не менее 816 пикселей.',
+      restart: 'Начать игру заново',
     },
     dice: {
       winMessage: 'Поздравляем! Вы достигли Космического Сознания.',
@@ -1190,7 +1194,9 @@ const messages = {
       startWithSix: 'Выбросьте 6 на кубике, чтобы начать игру.'
     },
     history: {
-      historyTitle: 'История игры'
+      historyTitle: 'История игры',
+      downloadHistory: 'Сохранить историю игры',
+      confirmRestart: 'Хотите начать заново? История будет очищена.',
     },
     cards: {
       1: {

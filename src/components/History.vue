@@ -1,11 +1,16 @@
 <script setup>
 import { useHistoryStore } from '@/stores/history.js'
+import { useI18n } from 'vue-i18n'
 
 const store = useHistoryStore()
 const emits = defineEmits(['setNewGame'])
 
+const { t } = useI18n()
+
 const restart = () => {
-  emits('setNewGame')
+  if (confirm(t('history.confirmRestart'))) {
+    emits('setNewGame')
+  }
 }
 </script>
 
@@ -15,7 +20,7 @@ const restart = () => {
       class="history__restart"
       src="../assets/images/reload.svg"
       alt="restart"
-      title="Restart the game"
+      :title="$t('gameView.restart')"
       @click="restart"
     />
     <div class="history__header">
@@ -24,7 +29,7 @@ const restart = () => {
         src="../assets/images/download.svg"
         class="history__download"
         alt="download"
-        title="Download the history"
+        :title="$t('history.downloadHistory')"
         @click="store.downloadHistoryAsPdf()"
       />
     </div>
@@ -35,7 +40,7 @@ const restart = () => {
         :key="item.title"
         class="history__item"
       >
-        <p>{{ item.title }}</p>
+        <p>{{ $t(item.title) }}</p>
         <p class="history__time">{{ item.time }}</p>
       </div>
     </div>
