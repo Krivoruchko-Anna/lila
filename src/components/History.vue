@@ -18,7 +18,7 @@ const restart = () => {
   <div class="history">
     <img
       class="history__restart"
-      src="../assets/images/reload.svg"
+      src='/images/reload.svg'
       alt="restart"
       :title="$t('gameView.restart')"
       @click="restart"
@@ -26,7 +26,7 @@ const restart = () => {
     <div class="history__header">
       <h2>{{ $t('history.historyTitle') }}</h2>
       <img
-        src="../assets/images/download.svg"
+        src='/images/download.svg'
         class="history__download"
         alt="download"
         :title="$t('history.downloadHistory')"

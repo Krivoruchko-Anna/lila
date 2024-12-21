@@ -52,14 +52,14 @@ const message = computed(() => {
     <img
       class="dice__number"
       v-if="number"
-      :src="`src/assets/dice/dice-${number}.svg`"
+      :src="`/dice/dice-${number}.svg`"
       :alt="number"
       @click="emits('throw')"
     />
     <img
       v-else
       class="dice__loader"
-      src="@/assets/dice/dice-loader.svg"
+      src="/dice/dice-loader.svg"
       alt="loader"
     />
   </div>

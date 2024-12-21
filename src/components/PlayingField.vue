@@ -162,7 +162,7 @@ onMounted(() => {
   height: 688px;
   margin-top: 1rem;
   padding-bottom: 3rem;
-  background-image: url('../assets/images/game-field.jpg');
+  background-image: url('../../public/images/game-field.jpg');
   background-size: contain;
   box-shadow: 0 0 16px var(--color-dark);
   border-radius: 8px;
