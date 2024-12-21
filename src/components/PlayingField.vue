@@ -145,6 +145,7 @@ onMounted(() => {
   <div
     class="field"
     :class="{ finished: fieldStore.isGameFinished }"
+    style='background-image: url("/images/game-field.jpg")'
   >
     <Cells
       :active-cell="activeCell"
@@ -162,9 +163,9 @@ onMounted(() => {
   height: 688px;
   margin-top: 1rem;
   padding-bottom: 3rem;
-  background-image: url('../../public/images/game-field.jpg');
   background-size: contain;
   box-shadow: 0 0 16px var(--color-dark);
+  background-color: var(--vt-c-black);
   border-radius: 8px;
   filter: saturate(0.7);
 }

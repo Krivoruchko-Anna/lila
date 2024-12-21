@@ -72,97 +72,106 @@ onMounted(() => {
 </template>
 
 <style scoped lang="scss">
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
-
-nav {
-  position: relative;
-  width: 804px;
-  margin: 1rem auto 0;
-  display: flex;
-  flex-direction: row;
-  text-align: left;
-  font-size: 1rem;
-  padding: 1rem 0;
-
-  a {
-    display: inline-block;
-    padding: 0 1rem;
-    border-left: 1px solid var(--color-border);
-    color: var(--color-text-muted);
-
-    &:first-of-type {
-      border: 0;
-    }
-
-    &:hover {
-      color: var(--vt-c-white-soft);
-    }
+.app {
+  header {
+    line-height: 1.5;
+    max-height: 100vh;
   }
 
-  a.router-link-exact-active {
-    color: var(--color-text);
-  }
+  nav {
+    position: relative;
+    width: 804px;
+    margin: 1rem auto 0;
+    display: flex;
+    flex-direction: row;
+    text-align: left;
+    font-size: 1rem;
+    padding: 1rem 0;
 
-  @media (max-width: 816px) {
-    width: auto;
-    max-width: 400px;
-  }
-}
+    a {
+      display: inline-block;
+      padding: 0 1rem;
+      border-left: 1px solid var(--color-border);
+      color: var(--color-text-muted);
 
-.menu {
-  display: flex;
-  place-items: flex-start;
-  flex-wrap: wrap;
-}
-
-.dropdown {
-  position: absolute;
-  left: 180px;
-
-  @media (max-width: 360px) {
-    display: none;
-  }
-
-  .dropdown-btn {
-    padding: 6px 12px;
-    background-color: var(--color-dark);
-    color: var(--color-violet-light);
-    border-radius: 4px;
-    cursor: pointer;
-    border: 1px solid var(--color-border);
-    font-size: 14px;
-    outline: none;
-
-    &:focus {
-      border-color: var(--color-violet-light-dark);
-      border-radius: 4px 4px 0 0;
-    }
-  }
-
-  .dropdown-menu {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    background-color: var(--color-dark);
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    border-radius: 0 0 4px 4px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    z-index: 10;
-
-    &__item {
-      padding: 6px 12px;
-      cursor: pointer;
-      font-size: 14px;
-      color: var(--color-violet-light);
+      &:first-of-type {
+        border: 0;
+      }
 
       &:hover {
-        background-color: var(--color-violet-light-dark);
+        color: var(--vt-c-white-soft);
+      }
+    }
+
+    a.router-link-exact-active {
+      color: var(--color-text);
+    }
+
+    @media (max-width: 816px) {
+      width: auto;
+      max-width: 400px;
+      gap: 10px;
+    }
+  }
+
+  .menu {
+    display: flex;
+    place-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .dropdown {
+    position: absolute;
+    left: 180px;
+
+    @media (max-width: 816px) {
+      position: relative;
+      left: 0;
+      margin-left: 14px;
+    }
+
+    .dropdown-btn {
+      padding: 6px 12px;
+      background-color: var(--color-dark);
+      color: var(--color-violet-light);
+      border-radius: 4px;
+      cursor: pointer;
+      border: 1px solid var(--color-border);
+      font-size: 14px;
+      outline: none;
+
+      &:focus {
+        border-color: var(--color-violet-light-dark);
+        border-radius: 4px 4px 0 0;
+      }
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      background-color: var(--color-dark);
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      border-radius: 0 0 4px 4px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      z-index: 10;
+
+      @media (max-width: 816px) {
+        width: 42px;
+      }
+
+      &__item {
+        padding: 6px 12px;
+        cursor: pointer;
+        font-size: 14px;
+        color: var(--color-violet-light);
+
+        &:hover {
+          background-color: var(--color-violet-light-dark);
+        }
       }
     }
   }

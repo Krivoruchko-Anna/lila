@@ -43,15 +43,16 @@ body {
 
 #app {
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
+  height: 100%;
   overflow: auto;
   display: flex;
   justify-content: center;
   align-content: center;
   margin: 0 auto;
+  padding: 0 30px;
   font-weight: normal;
   background-color: var(--color-violet-light-dark);
-  background-image: url('../../public/images/milky-way-bg.jpg');
   background-size: cover;
   background-blend-mode: hard-light;
 }
@@ -60,9 +61,5 @@ body {
   body {
     display: flex;
     place-items: center;
-  }
-
-  #app {
-    padding: 0 2rem;
   }
 }
